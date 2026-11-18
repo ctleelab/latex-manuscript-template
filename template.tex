@@ -1,0 +1,250 @@
+%---------------------------------
+% Chktex Suppressions
+%---------------------------------
+% Suppress 2: Using ~ spaces
+% chktex-file 2
+
+% Suppress 3: You should enclose the previous parenthesis with `{}'.
+% chktex-file 3
+
+% Suppress 6: No italic correction (`\/') found.
+% chktex-file 6
+
+% Suppress 8: Wrong length of dash may have been used.
+% chktex-file 8
+
+% Suppress 13: Intersentence spacing (`\@') should perhaps be used.
+% chktex-file 13
+
+% cspell:disable
+\documentclass[12pt]{article}
+
+%---------------------------------
+% Layouts and fonts
+%---------------------------------
+\usepackage[margin=1in]{geometry}
+
+% UNCOMMENT FANCYHDR AND LASTPAGE FOR CUSTOM HEADERS AND FOOTERS
+% AND PAGE NUMBERS
+% \usepackage{fancyhdr}
+% \usepackage{lastpage}
+
+\usepackage{mathtools} % should load amsmath
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{fontspec} % for custom fonts
+\setmainfont{Arial}
+\usepackage{microtype} % microtypographical extensions for better document kerning
+\usepackage{ulem} % to strikethrough text with the command \sout{text to be striked} and \ul for underline
+\usepackage{xspace} % for proper spacing after commandsß
+\usepackage[dvipsnames, table]{xcolor}
+
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[shortlabels]{enumitem}
+\setlist{leftmargin=2em,labelsep=0.5em,nosep}
+\setlist[itemize]{label=-}
+
+% UNCOMMENT BELOW FOR ATYPICAL LINE SPACING
+% \usepackage{setspace}
+% \onehalfspacing
+
+%---------------------------------
+% Figures and captions
+%---------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{framed}
+\setlength{\FrameSep}{2pt}
+\setlength{\OuterFrameSep}{0pt}
+
+\usepackage{sidecap}    % sideways captions
+\usepackage{subcaption}
+\usepackage[labelfont={bf,footnotesize}, textfont=footnotesize, skip=1pt]{caption}
+% \captionsetup[subfloat]{position=top,singlelinecheck=false,labelfont={normalsize,sf}, labelformat=simple,listofformat=subparens,aboveskip=0pt,parskip=0pt,farskip=-5pt,captionskip=0pt}
+
+%---------------------------------
+% Links and bookmarks
+%---------------------------------
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks,colorlinks=false]{hyperref}
+\usepackage{bookmark}
+\usepackage[all]{hypcap}
+\usepackage[capitalize]{cleveref}
+\newcommand{\crefrangeconjunction}{--}
+
+%---------------------------------
+% Units
+%---------------------------------
+\usepackage{siunitx}
+\DeclareSIUnit\bar{bar}
+\DeclareSIUnit{\molecule}{molecule}
+\DeclareSIUnit{\molecules}{molecule}
+\DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
+\DeclareSIUnit\Molar{M}
+\sisetup{
+  uncertainty-mode = separate,
+  mode = match,
+  propagate-math-font = true,
+  reset-math-version = false,
+  reset-text-family = false,
+  reset-text-series = false,
+  reset-text-shape = false,
+  text-family-to-math = true,
+  text-series-to-math = true,
+  range-phrase = --,
+  list-units = single,
+  range-units = single,
+  group-digits = integer,
+}
+
+\usepackage[version=4]{mhchem}
+\usepackage{lipsum}
+
+%---------------------------------
+% Bibliography settings
+%---------------------------------
+\usepackage[backend=biber, style=chem-acs, maxbibnames=5, url=false, bibstyle=numeric, autocite=superscript, doi=false]{biblatex} %defernumbers=true
+\defbibcheck{uncited}{
+  \ifciteseen
+  {\skipentry}
+  {}
+}
+
+\renewcommand\multicitedelim{\addsemicolon\space}
+\addbibresource{refs.bib}
+
+\DeclareFieldFormat{journaltitle}{\textit{#1}}
+\renewbibmacro{in:}{}
+
+\defbibheading{bibliography}[\bibname]{\noindent \textbf{#1}\par}
+\renewcommand*{\bibfont}{\small}
+
+\NewBibliographyString{preprint,preprints}
+\DefineBibliographyStrings{english}{%
+  preprint = {Preprint},
+  preprints = {Preprints}
+}
+
+% Add the biorxiv eprint type
+\DeclareFieldFormat{eprint:biorxiv}{BioRxiv \mathchardef\UrlBreakPenalty=100
+\mathchardef\UrlBigBreakPenalty=100\url{#1}}
+%=================================
+
+%---------------------------------
+% Set spacing for section headers
+%---------------------------------
+\usepackage{titlesec}
+
+% NIH ALPH SECTIONS
+\renewcommand\thesection{\Alph{section}}
+% \renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\alph{subsubsection}}
+
+%% CUSTOM LENGTH FOR BEFORE (SUB)SECTION VSPACE
+\newlength{\mysecskip}
+\newlength{\myaftersep}
+\setlength{\mysecskip}{0.5ex}
+\setlength{\myaftersep}{0.5ex} % vertical or horizontal sep after section
+
+%%\titlespacing*{command}{left}{before-sep}{after-sep}[right-sep]
+\titlespacing*{\section}{0pt}{2\mysecskip}{\myaftersep}
+\titlespacing*{\subsection}{0pt}{\mysecskip}{\myaftersep}
+\titlespacing*{\subsubsection}{0pt}{\mysecskip}{\myaftersep}
+\titlespacing*{\paragraph}{0pt}{0ex}{1em}
+
+% Define a new length for separation between section label and text
+\newlength{\mysectionlabelsep}
+\setlength{\mysectionlabelsep}{0.5em}
+%\titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
+% \titleformat{\section}[runin]{\normalfont\normalsize\bfseries}{\thesection}{\mysectionlabelsep}{}
+\titleformat{\section}[hang]{\normalfont\normalsize\bfseries}{\thesection}{\mysectionlabelsep}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries}{\thesubsection}{\mysectionlabelsep}{}
+\titleformat{\subsubsection}[hang]{\normalfont\normalsize\bfseries\itshape}{\thesubsubsection}{\mysectionlabelsep}{}
+\titleformat{\paragraph}[runin]{\normalfont\normalsize\itshape}{\theparagraph}{\mysectionlabelsep}{}
+
+\setcounter{secnumdepth}{6}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+  }{%
+  \end{center}
+}
+
+%---------------------------------
+% Custom macros
+%---------------------------------
+\newcommand{\needref}[0]{\textcolor{red}{[REFS]}\xspace}
+\newcommand{\wip}[0]{\textcolor{red}{[WIP]}\xspace}
+
+\newcommand{\thinsim}{{\raise.17ex\hbox{\(\scriptstyle\mathtt{\sim}\)}}}
+
+\newcommand{\Red}[1]{{\color{red}{#1}}}
+\newcommand{\Blue}[1]{{\color{blue}{#1}}}
+
+\newcommand{\calcium}{\ce{Ca^{2+}}\xspace}
+\newcommand{\revise}[1]{\Red{{#1}}}  % material to revise
+
+% ENVIRONMENT FOR CHANGING PARAGRAPH INDENT LOCALLY
+\newlength\mystoreparindent
+\newenvironment{myparindent}[1]{%
+  \setlength{\mystoreparindent}{\the\parindent}
+  \setlength{\parindent}{#1}
+}{%
+  \setlength{\parindent}{\mystoreparindent}
+}
+
+% cspell:enable
+%---------------------------------
+% Acronyms and glossary
+%---------------------------------
+% Learn more here: https://www.overleaf.com/learn/latex/glossaries
+% \usepackage[acronym, nonumberlist, nopostdot, nogroupskip, numberedsection=false]{glossaries}
+% \setlength{\glsdescwidth}{0.8\textwidth}
+\usepackage{glossaries-extra}
+\setabbreviationstyle[acronym]{long-short}
+\glssetcategoryattribute{acronym}{nohyperfirst}{true}
+\renewcommand*{\glsdonohyperlink}[2]{%
+{\glsxtrprotectlinks \glsdohypertarget{#1}{#2}}}
+
+% \makeglossaries{}
+
+\newacronym[shortplural={ROS}, longplural={reactive oxygen species}]{ROS}{ROS}{reactive oxygen species}
+
+%---------------------------------
+% Configure headers and footers
+%---------------------------------
+% Set offset to each header and footer
+% \fancyhfoffset{0em}
+% % Remove head rule
+% \renewcommand{\headrulewidth}{0pt}
+% \pagestyle{fancy}
+% % Clear all header & footer fields
+% \fancyhf{}
+% \fancyfoot[C]{\scriptsize\textcolor[HTML]{666666}{\thepage{} of \pageref{LastPage}}}
+% \fancyfoot[R]{\scriptsize\textcolor[HTML]{666666}{Last updated: \today}}
+
+%---------------------------------
+% BEGIN DOCUMENT
+%---------------------------------
+\begin{document}
+\begin{tightcenter}
+  \textbf{TITLE}\\
+  AUTHOR\textsuperscript{1,*}\\
+  \textsuperscript{1} Department\\
+  \textsuperscript{*} To whom correspondence must be addressed:
+\end{tightcenter}
+
+\section{Abstract}
+
+
+
+\printbibliography
+
+% UNCOMMENT TO PRINT UNCITED REFERENCES IN BIB FILE
+% \nocite{*}
+% \Red{\printbibliography[check=uncited]}
+\end{document}
